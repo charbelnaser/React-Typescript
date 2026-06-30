@@ -10,7 +10,7 @@ export const handlers = [
     if (searchName) {
       const lowerSearchName = searchName.toLowerCase();
       filteredData = allCharacters.filter(character =>
-        character.name.toLowerCase().includes(lowerSearchName)
+        character.name.toLowerCase().startsWith(lowerSearchName)
       );
     }
 
@@ -45,5 +45,17 @@ export const handlers = [
     return HttpResponse.json({
       reactions: allReactions,
     }, { status: 200 });
+  }),
+
+  http.post('/api/reactions', async ({ request }) => {
+    const body = await request.json() as { content: string; characterId: number };
+    const newReaction = {
+      id: String(Date.now()),
+      content: body.content,
+      characterId: body.characterId,
+      deleted: false,
+    };
+    allReactions.push(newReaction);
+    return HttpResponse.json(newReaction, { status: 201 });
   }),
 ];

@@ -20,7 +20,7 @@
     "preview": "vite preview"
   },
   "engines": {
-    "node": "20.11.1",
+    "node": ">=20.19.0 <21.0.0 || >=22.12.0",
     "npm": ">= 6.13.6",
     "yarn": ">= 3.4.1"
   },
@@ -48,5 +48,6 @@
     "workerDirectory": [
       "public"
     ]
-  }
+  },
+  "packageManager": "yarn@3.4.1"
 }

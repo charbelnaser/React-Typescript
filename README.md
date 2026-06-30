@@ -86,3 +86,59 @@ To start development, the candidate can execute `yarn start`, which will run the
 ## Project delivery
 
 This project should be accessible on GitHub as either a private or public repository. The candidate's recruiter will provide further details when it comes to who to give access to the repository.
+
+---
+
+## Running this implementation
+
+1. Install dependencies (the repo pins Yarn 3.4.1 via `.yarnrc.yml`, so no global Yarn install is required):
+   ```bash
+   corepack enable        # if `yarn` isn't already on your PATH
+   yarn
+   ```
+2. Start the dev server:
+   ```bash
+   yarn start
+   ```
+3. Open the app at the URL Vite prints (defaults to **http://localhost:5173**).
+
+No backend is needed — [MSW](https://mswjs.io/) intercepts `/api/characters` and `/api/reactions` in the browser and serves the fixture data from [src/__mocks/data.ts](src/__mocks/data.ts).
+
+### Using the app
+
+- Type a name in the **Search** field (top right) and press **Enter** to filter characters whose name starts with that text. Clear the field and press Enter again (or use the clear button) to see all characters.
+- Use the **pagination bar** at the bottom to move between pages of 4 results.
+- Each character card shows their image (or a placeholder if none is provided), species/birth year, description, affiliations, and aggregated reactions (emoji + count).
+
+### Alternative: run with Docker
+
+If you'd rather not install Node/Yarn locally, the repo includes a `Dockerfile` and
+`docker-compose.yml` that run the same dev server (with hot-reload) inside a container.
+
+**1. Install a Docker engine.** Any of these gives you a working `docker` CLI:
+
+- [Rancher Desktop](https://rancherdesktop.io/) (free, cross-platform) — during setup,
+  set **Container Engine → dockerd (moby)** in Preferences so the `docker` CLI works
+  (Rancher's other option, `containerd`, only exposes `nerdctl`).
+- [Docker Desktop](https://www.docker.com/products/docker-desktop/) — works out of the box.
+- On Linux, the [Docker Engine](https://docs.docker.com/engine/install/) package directly.
+
+Verify it's installed and running:
+```bash
+docker --version
+docker compose version
+```
+
+**2. Build and start the container** from the project root:
+```bash
+docker compose up --build
+```
+
+**3. Open http://localhost:5173** — same app, same hot-reload, just running inside the container.
+
+Stop it with `Ctrl+C`, or `docker compose down` if it's running in the background
+(`docker compose up --build -d`).
+
+## Architecture
+
+See [ARCHITECTURE.md](ARCHITECTURE.md) for a walkthrough of the folder structure, data flow, state-management choices, and the edge cases that were specifically handled.

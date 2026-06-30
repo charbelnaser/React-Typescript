@@ -14,3 +14,21 @@ export interface Reaction {
   characterId: number;
   deleted: boolean;
 }
+
+export interface CharactersResponse {
+  results: Character[];
+  total: number;
+  page: number;
+  limit: number;
+  next: string | null;
+  previous: string | null;
+}
+
+export interface ReactionsResponse {
+  reactions: Reaction[];
+}
+
+export interface ReactionSummary {
+  content: string;
+  count: number;
+}
